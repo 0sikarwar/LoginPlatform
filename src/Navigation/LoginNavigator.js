@@ -3,11 +3,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../views/Login';
 import Signup from '../views/Signup';
 import { LeftButton } from '../components/Header';
-import {primaryThemeColor,primaryTextColor} from '../styles/color'
+import { primaryThemeColor, primaryTextColor } from '../styles/color'
 
 const Stack = createStackNavigator();
 
-const LoginPage = (props) => {
+const RootNavigation = (props) => {
   return (
       <Stack.Navigator
         initialRouteName= "Login"
@@ -37,4 +37,4 @@ const LoginPage = (props) => {
       </Stack.Navigator>)
 };
 
-export default LoginPage;
+export default RootNavigation;

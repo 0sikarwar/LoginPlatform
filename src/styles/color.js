@@ -1,6 +1,7 @@
 export const primaryThemeColor = '#DAFF33'
 export const primaryTextColor = '#000'
-export const primaryButtonColor = '#841584'
+export const primaryButtonColor = '#ea005f'
+export const primaryButtonTextColor = '#fff'
 export default {
   cWhite: {
     color: '#fff',

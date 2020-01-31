@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Button, Alert} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {View, Text, Button, Alert, TouchableOpacity} from 'react-native';
 import Input from '../components/Input';
 import styles from '../styles';
-import { primaryButtonColor } from '../styles/color';
 import {validateEmail} from '../utils';
+import AppContext from  '../context'
+import { registerUser, resetUserData } from '../context/actions/user';
 const Signup = (props) => {
+  const [mainContext, dispatch] =  useContext(AppContext)
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUserName] = useState(props.route.params.username || '');
@@ -21,11 +23,18 @@ const Signup = (props) => {
     cblue,
     taCenter,
     mt15,
+    primaryButtonText,
+    primaryButton
   } = styles;
   useEffect(() => {
     setUserName(props.route.params.username || '');
   }, [props.route.params.username]);
-
+  useEffect(() => {
+    if (mainContext.user.registerErrMsg) {
+      Alert.alert('Oh snap', mainContext.user.registerErrMsg);
+    }
+  }, [mainContext.user.registerErrMsg])
+  console.log("mainContext signup",mainContext)
   const _handleInputChange = (value, name) => {
     switch (name) {
       case 'username':
@@ -64,11 +73,18 @@ const Signup = (props) => {
 
   const _handleSubmit = () => {
     if (validateInputs()) {
-      Alert.alert('Logged In', `UserName ${username} Password ${password}`);
+      dispatch(resetUserData())
+      const newUser = {
+        firstName,
+        lastName,
+        username,
+        password
+      }
+      dispatch(registerUser(newUser, dispatch))
     }
   };
 
-  const _handleSignupClick = () => {
+  const _handleSigninClick = () => {
     props.navigation.navigate('Login', {
       username: username,
     });
@@ -119,9 +135,11 @@ const Signup = (props) => {
           value={password2}
           secureTextEntry={true}
         />
+      <TouchableOpacity onPress={_handleSubmit} style={[primaryButton]}>
+        <Text style={[primaryButtonText]}>Register</Text>
+      </TouchableOpacity>
       </View>
-      <Button onPress={_handleSubmit} title="Sign up" color={primaryButtonColor} />
-      <Text style={[cblue, taCenter, mt15]} onPress={_handleSignupClick}>
+      <Text style={[cblue, taCenter]} onPress={_handleSigninClick}>
         Already have account Login
       </Text>
     </View>

@@ -21,6 +21,12 @@ export default {
   mt40: {
     marginTop: 40,
   },
+  ml20: {
+    marginLeft: 20
+  },
+  mr20: {
+    marginRight:20
+  },
   mtSatusBar: {
     marginTop: StatusBar.currentHeight,
   },
